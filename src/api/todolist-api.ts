@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL:'https://social-network.samuraijs.com/api/1.1/',
+    baseURL: 'https://social-network.samuraijs.com/api/1.1/',
     withCredentials: true,
     headers: {
         // 'API-KEY': '1xxxxxx'
@@ -10,7 +10,7 @@ const instance = axios.create({
 
 export const todolistApi = {
 
-    get() {
+    getTodo() {
         return instance.get<TodolistType[]>('todo-lists')
     },
     addTodo(title: string) {
@@ -21,10 +21,14 @@ export const todolistApi = {
     },
     updateTodo(todoListId: string, title: string) {
         return instance.put<CreateTodolistType>(`todo-lists/${todoListId}`, {title})
+    },
+    getTask(todoListId:string) {
+        return instance.get<TaskType[]>(`todo-lists/${todoListId}/tasks`)
     }
 }
+
 type TodolistType = {
-    addedDate:string
+    addedDate: string
     id: string
     order: number
     title: string
@@ -35,4 +39,10 @@ type CreateTodolistType<T = {}> = {
     resultCode: number
     messages: string[],
     fieldsErrors: string[]
+}
+
+type TaskType = {
+    items: []
+    error: null
+    totalCount: 0
 }

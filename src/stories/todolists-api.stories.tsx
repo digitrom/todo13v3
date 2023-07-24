@@ -10,7 +10,7 @@ export const GetTodolists = () => {
     useEffect(() => {
         // здесь мы будем делать запрос и ответ закидывать в стейт.
         // который в виде строки будем отображать в div-ке
-        const promise = todolistApi.get()
+        const promise = todolistApi.getTodo()
         promise.then((res) => {
             console.log(res)
           setState(res.data)
@@ -38,7 +38,6 @@ export const DeleteTodolist = () => {
             setState(res.data)
         })
     }, [])
-
     return <div>{JSON.stringify(state)}</div>
 }
 export const UpdateTodolistTitle = () => {
@@ -51,7 +50,21 @@ export const UpdateTodolistTitle = () => {
                 setState(res.data)
             })
     }, [])
+    return <div>{JSON.stringify(state)}</div>
+}
 
+export const getTask = () => {
+    const [state, setState] = useState<any>(null)
+    const todoListId = '0c22aafd-52c6-4789-93ed-1203c1d57808'
+    useEffect(() => {
+        // здесь мы будем делать запрос и ответ закидывать в стейт.
+        // который в виде строки будем отображать в div-ке
+        const promise = todolistApi.getTask(todoListId)
+        promise.then((res) => {
+            console.log(res)
+            setState(res.data)
+        })
+    }, [])
     return <div>{JSON.stringify(state)}</div>
 }
 
