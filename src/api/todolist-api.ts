@@ -14,20 +14,26 @@ export const todolistApi = {
         return instance.get<TodolistType[]>('todo-lists')
     },
     addTodo(title: string) {
-        return instance.post<CreateTodolistType<{ item: TodolistType }>>('todo-lists', {title})
+        return instance.post<AllTodolistResponseType<{ item: TodolistType }>>('todo-lists', {title})
     },
     deleteTodo(todoListId: string) {
-        return instance.delete<CreateTodolistType>(`/todo-lists/${todoListId}`)
+        return instance.delete<AllTodolistResponseType>(`/todo-lists/${todoListId}`)
     },
     updateTodo(todoListId: string, title: string) {
-        return instance.put<CreateTodolistType>(`todo-lists/${todoListId}`, {title})
+        return instance.put<AllTodolistResponseType>(`todo-lists/${todoListId}`, {title})
     },
     getTask(todoListId:string) {
         return instance.get<TaskType[]>(`todo-lists/${todoListId}/tasks`)
     },
     addTask(todoListId: string, title: string) {
-        return instance.post<CreateTaskType<{ item: TaskType }>>(`todo-lists/${todoListId}/tasks`, {todoListId,title})
+        return instance.post<AllTaskResponseType<{ item: TaskType }>>(`todo-lists/${todoListId}/tasks`, {todoListId,title})
     },
+    deleteTask(todoListId: string, taskId:string) {
+        return instance.delete<AllTaskResponseType>(`/todo-lists/${todoListId}/tasks/${taskId}`)
+    },
+    updateTask(todoListId: string, taskId:string, completed: boolean) {
+        return instance.put<AllTaskResponseType>(`todo-lists/${todoListId}`, {todoListId, taskId, completed})
+    }
 }
 
 type TodolistType = {
@@ -37,7 +43,7 @@ type TodolistType = {
     title: string
 }
 
-type CreateTodolistType<T = {}> = {
+type AllTodolistResponseType<T = {}> = {
     data: T
     resultCode: number
     messages: string[],
@@ -50,7 +56,7 @@ type TaskType = {
     totalCount: 0
 }
 
-type CreateTaskType<T ={}> = {
+type AllTaskResponseType<T ={}> = {
     data: T
     resultCode: number
     messages: string[]
