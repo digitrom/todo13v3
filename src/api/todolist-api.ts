@@ -24,7 +24,10 @@ export const todolistApi = {
     },
     getTask(todoListId:string) {
         return instance.get<TaskType[]>(`todo-lists/${todoListId}/tasks`)
-    }
+    },
+    addTask(todoListId: string, title: string) {
+        return instance.post<CreateTaskType<{ item: TaskType }>>(`todo-lists/${todoListId}/tasks`, {todoListId,title})
+    },
 }
 
 type TodolistType = {
@@ -45,4 +48,10 @@ type TaskType = {
     items: []
     error: null
     totalCount: 0
+}
+
+type CreateTaskType<T ={}> = {
+    data: T
+    resultCode: number
+    messages: string[]
 }

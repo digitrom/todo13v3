@@ -68,3 +68,16 @@ export const getTask = () => {
     return <div>{JSON.stringify(state)}</div>
 }
 
+export const CreateTask = () => {
+    const [state, setState] = useState<any>(null)
+    const todoListId = '0c22aafd-52c6-4789-93ed-1203c1d57808'
+    const title = 'task 1'
+    useEffect(() => {
+        todolistApi.addTask(todoListId, title)
+            .then((res) => {
+                setState(res.data)
+            })
+    }, [])
+    return <div>{JSON.stringify(state)}</div>
+}
+
